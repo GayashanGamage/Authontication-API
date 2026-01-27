@@ -2,6 +2,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
 from dotenv import load_dotenv
+from fastapi import HTTPException
 
 load_dotenv()
 
@@ -19,6 +20,4 @@ def get_database():
         return client.get_database("authentication")
     
     except Exception as e:
-        print(e)
-        return None
-    print('transaction ended')
+        raise HTTPException(status_code=500, detail="Failed to connect to the database")
